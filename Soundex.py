@@ -21,7 +21,7 @@ def generate_soundex(name):
 
     for char in name[1:]:
         code = get_soundex_code(char)
-        if code != '0' and code != prev_code:
+        if code not in ('0', prev_code):
             soundex += code
             prev_code = code
         if len(soundex) == 4:
