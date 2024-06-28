@@ -12,22 +12,19 @@ def get_soundex_code(c):
 
 
 def generate_soundex(name):
-    if not name:
-        return ""
+  if not name:
+      return ""
 
-    # Start with the first letter (capitalized)
-    soundex = name[0].upper()
-    prev_code = get_soundex_code(soundex)
+  soundex = name[0].upper()
+  prev_code = None
 
-    for char in name[1:]:
-        code = get_soundex_code(char)
-        if code not in ('0', prev_code):
-            soundex += code
-            prev_code = code
-        if len(soundex) == 4:
-            break
+  for char in name[1:]:
+      code = get_soundex_code(char.upper())
+      if code != '0' and (prev_code is None or code != prev_code):
+          soundex += code
+          prev_code = code
 
-    # Pad with zeros if necessary
-    soundex = soundex.ljust(4, '0')
+      if len(soundex) == 4:
+          break
 
-    return soundex
+  return soundex.ljust(4, '0')
