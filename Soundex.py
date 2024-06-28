@@ -11,22 +11,23 @@ def get_soundex_code(c):
     return mapping.get(c, '0')  # Default to '0' for non-mapped characters
 
 
-def get_soundex(soundex, name, prev_code):
+def add_soundex_code(soundex, char, prev_code):
+    code = get_soundex_code(char)
+    if code != '0' and code != prev_code and len(soundex) < 4:
+        soundex += code
+        prev_code = code
+    return soundex, prev_code
+
+
+def update_soundex(soundex, name, prev_code):
     for char in name[1:]:
-        code = get_soundex_code(char)
-        if code != '0' and code != prev_code:
-            soundex += code
-            prev_code = code
-        if len(soundex) == 4:
-            break
-    soundex = soundex.ljust(4, '0')
-    return soundex
-    
-    
+        soundex, prev_code = add_soundex_code(soundex, char, prev_code)
+    return soundex.ljust(4, '0')
+
+
 def generate_soundex(name):
     if not name:
         return ""
     soundex = name[0].upper()
     prev_code = get_soundex_code(soundex)
-    soundex = get_soundex(soundex, name, prev_code)
-    return soundex
+    return update_soundex(soundex, name, prev_code)
