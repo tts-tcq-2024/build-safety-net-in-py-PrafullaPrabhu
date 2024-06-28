@@ -11,8 +11,7 @@ def get_soundex_code(c):
     return mapping.get(c, '0')  # Default to '0' for non-mapped characters
 
 
-def add_soundex_code(soundex, char, prev_code):
-    code = get_soundex_code(char)
+def add_soundex_code(soundex, code, prev_code):
     if code != '0' and code != prev_code and len(soundex) < 4:
         soundex += code
         prev_code = code
@@ -21,7 +20,8 @@ def add_soundex_code(soundex, char, prev_code):
 
 def update_soundex(soundex, name, prev_code):
     for char in name[1:]:
-        soundex, prev_code = add_soundex_code(soundex, char, prev_code)
+        code = get_soundex_code(char)
+        soundex, prev_code = add_soundex_code(soundex, code, prev_code)
     return soundex.ljust(4, '0')
 
 
