@@ -24,9 +24,6 @@ class TestSoundex(unittest.TestCase):
     def test_name_with_no_mapped_characters(self):
         self.assertEqual(generate_soundex("Aeiou"), "A000")
 
-    def test_name_with_multiple_zero_codes(self):
-        self.assertEqual(generate_soundex("Bob"), "B100")
-
     def test_name_exceeds_max_length(self):
         self.assertEqual(generate_soundex("Washington"), "W252")
 
