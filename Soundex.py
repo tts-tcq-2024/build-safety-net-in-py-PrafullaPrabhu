@@ -11,8 +11,16 @@ def get_soundex_code(c):
     return mapping.get(c, '0')  # Default to '0' for non-mapped characters
 
 
+def is_valid_code(code, prev_code):
+    return code != '0' and code != prev_code
+
+
+def is_soundex_length_valid(soundex):
+    return len(soundex) < 4
+
+
 def add_soundex_code(soundex, code, prev_code):
-    if code != '0' and code != prev_code and len(soundex) < 4:
+    if is_valid_code(code, prev_code) and is_soundex_length_valid(soundex):
         soundex += code
         prev_code = code
     return soundex, prev_code
